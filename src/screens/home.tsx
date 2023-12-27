@@ -7,16 +7,19 @@ import {ButtonText} from '../components/ButtonText';
 import {Header} from '../components/Header';
 import {PostCard} from '../components/PostCard';
 import {Spacing} from '../components/Spacing';
-import {ROUTES} from '../routes';
 import {useAppDispatch, useAppSelector} from '../store';
 import {CurrentPostActions} from '../store/features/currentPost';
 import {PostBuilderActions} from '../store/features/postBuilder';
 import {PRIMARY} from '../utils/colors';
 import {useNavigation} from '@react-navigation/native';
+import {
+  ROOT_ROUTES,
+  RootStackNavigationProp,
+} from '../navigation/RootNavigatorTypes';
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   const posts = useAppSelector(state => state.posts);
 
@@ -32,11 +35,16 @@ const Home = () => {
   const signOut = () => {
     auth().signOut();
 
-    // router.replace(ROUTES.SIGN_UP);
+    setTimeout(() => {
+      navigation.reset({
+        index: 0,
+        routes: [{name: ROOT_ROUTES.LANDING}],
+      });
+    }, 1000);
   };
 
   const goToProfile = () => {
-    // router.push(ROUTES.MY_PROFILE)
+    navigation.navigate(ROOT_ROUTES.MY_PROFILE);
   };
 
   return (

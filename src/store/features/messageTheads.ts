@@ -17,6 +17,9 @@ const messageThreads = createSlice({
         state[messageThread.id] = messageThread;
       });
     },
+    resetMessageThreads: () => {
+      return initialState;
+    },
   },
 });
 

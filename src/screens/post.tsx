@@ -3,12 +3,17 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import {Header} from '../components/Header';
-import {ROUTES} from '../routes';
 import {useAppDispatch, useAppSelector} from '../store';
 import {CurrentUserActions} from '../store/features/currentUser';
+import {useNavigation} from '@react-navigation/native';
+import {
+  ROOT_ROUTES,
+  RootStackNavigationProp,
+} from '../navigation/RootNavigatorTypes';
 
 const PostDetailPage = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   const currentPost = useAppSelector(state => state.currentPost);
   const users = useAppSelector(state => state.users);
@@ -19,13 +24,12 @@ const PostDetailPage = () => {
   );
 
   const goBack = () => {
-    // router.back();
+    navigation.goBack();
   };
 
   const goToUserDetailPage = () => {
     dispatch(CurrentUserActions.setCurrentUser(currentUser));
-
-    // router.push(ROUTES.USER);
+    navigation.navigate(ROOT_ROUTES.USER_DETAIL_PAGE);
   };
 
   return (

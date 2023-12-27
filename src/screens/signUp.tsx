@@ -8,13 +8,19 @@ import {ContinueButton} from '../components/ContinueButton';
 import {Header} from '../components/Header';
 import {InputLabel} from '../components/InputLabel';
 import {Spacing} from '../components/Spacing';
-import {ROUTES} from '../routes';
 import {useAppDispatch, useAppSelector} from '../store';
 import {UserActions} from '../store/features/user';
 import {createUserAccountThunk} from '../store/thunks/user-thunk';
+import {useNavigation} from '@react-navigation/native';
+import {
+  ROOT_ROUTES,
+  RootStackNavigationProp,
+} from '../navigation/RootNavigatorTypes';
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<RootStackNavigationProp>();
+  console.log('navigation', navigation.getState().routes);
   const user = useAppSelector(state => state.user);
 
   const [password, setPassword] = useState('');
@@ -96,7 +102,7 @@ const SignUp = () => {
 
       <TouchableOpacity
         style={styles.elementContainer}
-        onPress={() => router.push(ROUTES.SIGN_IN)}>
+        onPress={() => navigation.navigate(ROOT_ROUTES.SIGN_IN)}>
         <Text style={styles.goToSignInText}>Already have an account?</Text>
       </TouchableOpacity>
     </SafeAreaView>

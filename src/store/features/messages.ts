@@ -17,6 +17,9 @@ const messages = createSlice({
         state[message.id] = message;
       });
     },
+    resetMessages: () => {
+      return initialState;
+    },
   },
 });
 

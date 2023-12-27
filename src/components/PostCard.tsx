@@ -1,12 +1,15 @@
-
-import {useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 
 import {Post} from '../model/post';
-import {ROUTES} from '../routes';
 import {useAppDispatch, useAppSelector} from '../store';
 import {CurrentPostActions} from '../store/features/currentPost';
 import {CARD_SHADOW} from '../utils/styles';
+import {useNavigation} from '@react-navigation/native';
+import {
+  ROOT_ROUTES,
+  RootStackNavigationProp,
+} from '../navigation/RootNavigatorTypes';
 
 type Props = {
   post: Post;
@@ -16,6 +19,7 @@ export const PostCard = (props: Props) => {
   const {post} = props;
 
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   const users = useAppSelector(state => state.users);
   const currentUser = useMemo(() => users[post.user], [users, post.user]);
@@ -23,7 +27,7 @@ export const PostCard = (props: Props) => {
   const goToPostDetailPage = () => {
     dispatch(CurrentPostActions.setCurrentPost(post));
 
-    // router.push(ROUTES.POST);
+    navigation.navigate(ROOT_ROUTES.POST_DETAIL_PAGE);
   };
 
   return (

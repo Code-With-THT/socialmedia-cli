@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
 
 import {useAppDispatch} from '../store';
-import {takeUserToAppThunk} from '../store/thunks/user-thunk';
+import {signOutUserThunk, takeUserToAppThunk} from '../store/thunks/user-thunk';
 import {useNavigation} from '@react-navigation/native';
 import {
   ROOT_ROUTES,
@@ -15,9 +15,9 @@ const Landing = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
 
   const goToSignUp = () => {
-    console.log('go to sign up');
     navigation.navigate(ROOT_ROUTES.SIGN_UP);
   };
+
   const goToApp = () => {
     navigation.navigate(ROOT_ROUTES.HOME);
   };
@@ -32,6 +32,7 @@ const Landing = () => {
         }),
       );
     } else {
+      dispatch(signOutUserThunk());
       goToSignUp();
     }
   }, []);

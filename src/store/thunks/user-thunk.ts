@@ -14,6 +14,10 @@ import {
 } from '../../services/user';
 import {UserActions} from '../features/user';
 import {UsersActions} from '../features/users';
+import {PostsActions} from '../features/posts';
+import {MessageThreadsActions} from '../features/messageTheads';
+import {MessagesActions} from '../features/messages';
+import {FriendshipsActions} from '../features/friendships';
 
 type CreateUserAccountThunkProps = {
   password: string;
@@ -105,6 +109,21 @@ export const signInThunk = (props: SignInThunkProps): AppThunk<void> => {
     } catch (error) {
       console.log(error);
       return onError();
+    }
+  };
+};
+
+export const signOutUserThunk = (): AppThunk<void> => {
+  return async dispatch => {
+    try {
+      dispatch(UserActions.resetUser());
+      dispatch(UsersActions.resetUsers());
+      dispatch(PostsActions.resetPosts());
+      dispatch(MessageThreadsActions.resetMessageThreads());
+      dispatch(MessagesActions.resetMessages());
+      dispatch(FriendshipsActions.resetFriendships());
+    } catch (error) {
+      console.log('Could not sign out user', error);
     }
   };
 };

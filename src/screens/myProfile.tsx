@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -9,20 +9,23 @@ import {UserInfo} from '../components/user/UserInfo';
 import {ROUTES} from '../routes';
 import {useAppSelector} from '../store';
 import {BORDER_LIGHT_GREY} from '../utils/colors';
+import {useNavigation} from '@react-navigation/native';
+import {ROOT_ROUTES, RootStackNavigationProp} from '../navigation/RootNavigatorTypes';
 
 const MESSAGE_URL = Image.resolveAssetSource(
-  require('../assets/message.png'),
+  require('../../assets/message.png'),
 ).uri;
 
 type TABS = 'Posts' | 'Friends';
 
 const MyProfile = () => {
   const user = useAppSelector(state => state.user);
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   const [activeTab, setActiveTab] = useState<TABS>('Posts');
 
   const goBack = () => {
-    // router.back();
+    navigation.goBack();
   };
 
   const onTabPress = (tab: TABS) => setActiveTab(tab);
@@ -36,7 +39,7 @@ const MyProfile = () => {
           child: (
             <Image source={{uri: MESSAGE_URL}} style={styles.messageIcon} />
           ),
-          onPress: () => router.push(ROUTES.MESSAGES),
+          onPress: () => navigation.navigate(ROOT_ROUTES.MESSAGES),
         }}
       />
 

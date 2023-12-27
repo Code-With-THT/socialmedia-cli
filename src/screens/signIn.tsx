@@ -8,19 +8,24 @@ import {ContinueButton} from '../components/ContinueButton';
 import {Header} from '../components/Header';
 import {InputLabel} from '../components/InputLabel';
 import {Spacing} from '../components/Spacing';
-import {ROUTES} from '../routes';
 import {useAppDispatch, useAppSelector} from '../store';
 import {UserActions} from '../store/features/user';
 import {signInThunk} from '../store/thunks/user-thunk';
+import {useNavigation} from '@react-navigation/native';
+import {
+  ROOT_ROUTES,
+  RootStackNavigationProp,
+} from '../navigation/RootNavigatorTypes';
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user);
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   const [password, setPassword] = useState('');
 
-  const createAccount = () => {
-    const onSuccess = () => {};
+  const signIn = () => {
+    const onSuccess = () => navigation.navigate(ROOT_ROUTES.HOME);
 
     const onError = () =>
       Alert.alert('Could not create account', 'Please try again');
@@ -66,7 +71,7 @@ const SignIn = () => {
       <View style={styles.elementContainer}>
         <ContinueButton
           child={<ButtonText text="Sign In" />}
-          onPress={createAccount}
+          onPress={signIn}
         />
       </View>
 
@@ -74,7 +79,7 @@ const SignIn = () => {
 
       <TouchableOpacity
         style={styles.elementContainer}
-        onPress={() => router.push(ROUTES.SIGN_UP)}>
+        onPress={() => navigation.navigate(ROOT_ROUTES.SIGN_UP)}>
         <Text style={styles.goToSignInText}>Don't have an account?</Text>
       </TouchableOpacity>
     </SafeAreaView>

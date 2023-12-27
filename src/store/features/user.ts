@@ -34,6 +34,9 @@ const user = createSlice({
     setBio: (state, action: PayloadAction<string>) => {
       state.bio = action.payload;
     },
+    resetUser: () => {
+      return initialState;
+    },
   },
 });
 
