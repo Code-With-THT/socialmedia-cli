@@ -1,5 +1,8 @@
-// import { format } from 'date-fns';
+import {format} from 'date-fns';
 
-// export const parseDateToString = (date: Date | number) => {
-//   return format(date, 'dd/MM/yyyy');
-// };
+/**
+ * @returns 04/20/2021
+ */
+export const parseDateToString = (date: Date | number) => {
+  return format(date, 'MM/dd/yyyy');
+};

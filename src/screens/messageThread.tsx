@@ -7,14 +7,23 @@ import {useAppSelector} from '../store';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
+  withTiming,
+  Easing,
 } from 'react-native-reanimated';
 import {RootStackNavigationProp} from '../navigation/RootNavigatorTypes';
 import {useNavigation} from '@react-navigation/native';
 import {useKeyboard} from '@react-native-community/hooks';
 
+
+/**
+ * START HERE: Continue creating a message thread and add the listener
+ */
 const MessageThread = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
   const messageThreads = useAppSelector(state => state.messageThreads);
+  const currentMessageThread = useAppSelector(
+    state => state.currentMessageThread,
+  );
   const user = useAppSelector(state => state.user);
   const currentUser = useAppSelector(state => state.currentUser);
 
@@ -28,21 +37,26 @@ const MessageThread = () => {
      * It remains at a non-zero value even after it has been closed.
      */
     if (keyboardHeight !== 0 && keyboardHeight !== inputY.value) {
-      inputY.value = keyboardHeight;
+      // inputY.value = withTiming(keyboardHeight, {
+      //   duration: 100,
+      //   easing: Easing.linear,
+      // });
     } else if (!keyboardShown) {
       /**
        * At this point, the keyboard has been closed and the
        * inputY value is still the keyboard height.
        */
       if (inputY.value !== 20) {
-        inputY.value = 20;
+        inputY.value = withTiming(20, {
+          duration: 100,
+          easing: Easing.linear,
+        });
       }
     }
   }, [inputY, keyboardHeight, keyboardShown]);
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
-      // transform: [{translateY: inputY.value}],
       position: 'absolute',
       bottom: inputY.value,
     };
@@ -58,7 +72,12 @@ const MessageThread = () => {
 
   const goBack = () => navigation.goBack();
 
-  const onInputFocus = () => {};
+  const onInputFocus = () => {
+    inputY.value = withTiming(keyboardHeight, {
+      duration: 200,
+      easing: Easing.linear,
+    });
+  };
 
   const send = () => {};
 

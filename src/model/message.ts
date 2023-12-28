@@ -1,13 +1,13 @@
 export type Message = {
   id: string;
-  thread: string;
+  messageThread: string;
   sender: string;
   text: string;
 
   /**
    * Metadata
    */
-  sentDate: number;
-  sentDateString: string;
+  createdDate: number;
+  createdDateString: string;
   hasBeenRead: boolean;
 };

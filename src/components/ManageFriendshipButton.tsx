@@ -4,7 +4,7 @@ import {Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {FRIENDSHIP_STATUS} from '../model/friendship';
 import {User} from '../model/user';
 import {useAppDispatch, useAppSelector} from '../store';
-import {createFrienshipThunk} from '../store/thunks/friendships-thunk';
+import {requestFrienshipThunk} from '../store/thunks/friendships-thunk';
 import {PRIMARY} from '../utils/colors';
 
 type Props = {
@@ -64,7 +64,7 @@ export const ManageFriendshipButton = (props: Props) => {
       );
     };
 
-    dispatch(createFrienshipThunk(otherUser.id, onSuccess, onError));
+    dispatch(requestFrienshipThunk(otherUser.id, onSuccess, onError));
   };
 
   return (

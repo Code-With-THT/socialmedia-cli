@@ -23,7 +23,7 @@ export const getFrienshipsForUserThunk = (id: string): AppThunk<void> => {
   };
 };
 
-export const createFrienshipThunk = (
+export const requestFrienshipThunk = (
   otherUserId: string,
   onSuccess: () => void,
   onError: () => void,
@@ -37,12 +37,9 @@ export const createFrienshipThunk = (
         users: [user.id, otherUserId],
         requester: user.id,
         status: FRIENDSHIP_STATUS.PENDING,
-
         createdDate: Date.now(),
-        /**
-         * TO DO: How to format dates in Expo
-         */
         createdDateString: '',
+        acceptedDate: -1,
       };
 
       createFriendshipDocument(newFriendship);
@@ -50,7 +47,7 @@ export const createFrienshipThunk = (
 
       onSuccess();
     } catch (error) {
-      console.log('Could not retrieve Friendships for the user', error);
+      console.log('Could not request a new Friendship for the user', error);
 
       onError();
     }

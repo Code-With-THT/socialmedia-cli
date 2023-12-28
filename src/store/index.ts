@@ -10,6 +10,7 @@ import postBuilder from './features/postBuilder';
 import posts from './features/posts';
 import user from './features/user';
 import users from './features/users';
+import currentMessageThread from './features/currentMessageThread';
 
 const store = configureStore({
   reducer: {
@@ -40,6 +41,7 @@ const store = configureStore({
     friendships,
     messageThreads,
     messages,
+    currentMessageThread,
   },
 });
 
